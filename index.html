@@ -1,0 +1,230 @@
+<html>
+    <head>
+        <title>Dice Roll Test</title>
+
+        <style>
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                margin: 0;
+                background-color: #f0f0f0;
+            }
+
+            .scene {
+                width: 200px;
+                height: 200px;
+                perspective: 1000px;
+            }
+
+            .dice {
+                width: 100px;
+                height: 100px;
+                position: relative;
+                transform-style: preserve-3d;
+                /*animation: rollDice 3s ease-out forwards;*/
+            }
+
+            .face {
+                position: absolute;
+                width: 100px;
+                height: 100px;
+                background: white;
+                border: 1px solid #000;
+                line-height: 100px;
+                font-size: 50px;
+                text-align: center;
+                color: #000;
+                user-select: none;
+            }
+
+            .front {
+                transform: rotateY(0deg) translateZ(50px);
+            }
+            .back {
+                transform: rotateY(180deg) translateZ(50px);
+            }
+            .right {
+                transform: rotateY(90deg) translateZ(50px);
+            }
+            .left {
+                transform: rotateY(-90deg) translateZ(50px);
+            }
+            .top {
+                transform: rotateX(90deg) translateZ(50px);
+            }
+            .bottom {
+                transform: rotateX(-90deg) translateZ(50px);
+            }
+
+            @keyframes rollDice {
+                0% {
+                    transform: rotateX(0deg) rotateY(0deg);
+                }
+                25% {
+                    transform: rotateX(360deg) rotateY(0deg);
+                }
+                50% {
+                    transform: rotateX(360deg) rotateY(360deg);
+                }
+                75% {
+                    transform: rotateX(0deg) rotateY(360deg);
+                }
+                100% {
+                    transform: rotateX(0deg) rotateY(720deg);
+                }
+            } 
+
+            @keyframes roll-to-1 {
+                0% {
+                    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+                }
+                25% {
+                    transform: rotateX(0deg) rotateY(360deg) rotateZ(360deg);
+                }
+                50% {
+                    transform: rotateX(450deg) rotateY(360deg) rotateZ(360deg);
+                }
+                75% {
+                    transform: rotateX(450deg) rotateY(720deg) rotateZ(720deg);
+                }
+                100% {
+                    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+                }
+            } 
+
+            @keyframes roll-to-2 {
+                0% {
+                    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+                }
+                25% {
+                    transform: rotateX(0deg) rotateY(360deg) rotateZ(360deg);
+                }
+                50% {
+                    transform: rotateX(450deg) rotateY(360deg) rotateZ(360deg);
+                }
+                75% {
+                    transform: rotateX(450deg) rotateY(720deg) rotateZ(720deg);
+                }
+                100% {
+                    transform: rotateX(270deg) rotateY(0deg) rotateZ(0deg);
+                }
+            }
+
+            @keyframes roll-to-3 {
+                0% {
+                    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+                }
+                25% {
+                    transform: rotateX(0deg) rotateY(360deg) rotateZ(360deg);
+                }
+                50% {
+                    transform: rotateX(450deg) rotateY(360deg) rotateZ(360deg);
+                }
+                75% {
+                    transform: rotateX(450deg) rotateY(720deg) rotateZ(720deg);
+                }
+                100% {
+                    transform: rotateX(0deg) rotateY(270deg) rotateZ(0deg);
+                }
+            }
+
+            @keyframes roll-to-4 {
+                0% {
+                    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+                }
+                25% {
+                    transform: rotateX(0deg) rotateY(360deg) rotateZ(360deg);
+                }
+                50% {
+                    transform: rotateX(450deg) rotateY(360deg) rotateZ(360deg);
+                }
+                75% {
+                    transform: rotateX(450deg) rotateY(720deg) rotateZ(720deg);
+                }
+                100% {
+                    transform: rotateX(0deg) rotateY(90deg) rotateZ(0deg);
+                }
+            }
+
+            @keyframes roll-to-5 {
+                0% {
+                    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+                }
+                25% {
+                    transform: rotateX(0deg) rotateY(360deg) rotateZ(360deg);
+                }
+                50% {
+                    transform: rotateX(450deg) rotateY(360deg) rotateZ(360deg);
+                }
+                75% {
+                    transform: rotateX(450deg) rotateY(720deg) rotateZ(720deg);
+                }
+                100% {
+                    transform: rotateX(90deg) rotateY(0deg) rotateZ(0deg);
+                }
+            }
+
+            @keyframes roll-to-6 {
+                0% {
+                    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+                }
+                25% {
+                    transform: rotateX(0deg) rotateY(360deg) rotateZ(360deg);
+                }
+                50% {
+                    transform: rotateX(450deg) rotateY(360deg) rotateZ(360deg);
+                }
+                75% {
+                    transform: rotateX(450deg) rotateY(720deg) rotateZ(720deg);
+                }
+                100% {
+                    transform: rotateX(0deg) rotateY(180deg) rotateZ(0deg);
+                }
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div class="scene">
+          <div class="dice" id="dice">
+            <div class="face front">1</div>
+            <div class="face back">6</div>
+            <div class="face right">3</div>
+            <div class="face left">4</div>
+            <div class="face top">2</div>
+            <div class="face bottom">5</div>
+          </div>
+        </div>
+
+        <script>
+            function getDiceStartPosition(value) {
+                const startPositions = {
+                    1: { x: 0, y: 0, z: 0 },
+                    2: { x: 270, y: 0, z: 0 },
+                    3: { x: 0, y: 270, z: 0 },
+                    4: { x: 0, y: 90, z: 0 },
+                    5: { x: 90, y: 0, z: 0 },
+                    6: { x: 0, y: 180, z: 0 }
+                };
+                return startPositions[value];
+            }
+
+            function rollDice(val) {
+                if (val >= 1 && val <= 6) {
+                    dice.style.animation = 'none';
+                    
+                    void dice.offsetWidth;
+
+                    dice.style.animationName = `roll-to-${val}`;
+                    dice.style.animationDuration = '3s';
+                    dice.style.animationTimingFunction = 'ease-in-out';
+                    dice.style.animationFillMode = 'forwards';  
+                }
+            } 
+
+            rollDice(3); 
+        </script>
+    </body>
+</html>
